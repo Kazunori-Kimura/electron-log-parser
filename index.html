@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ログ抽出ツール</title>
+  <link rel="stylesheet" href="bower_components/Honoka/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="lib/style.css">
+</head>
+<body>
+  <div class="container">
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label class="col-sm-3 control-label">ログフォルダ</label>
+        <div class="col-sm-6">
+          <p class="form-control-static" id="path"
+            data-bind="text: path"></p>
+        </div>
+        <div class="col-sm-3">
+          <button class="btn btn-default" id="btnFolder"
+            data-bind="click: selectPath, disable: progress()">フォルダ選択
+          </button>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+          <button class="btn btn-primary"
+            data-bind="click: parseLogs, disable: progress()">ログ解析</button>
+        </div>
+      </div>
+    </form>
+
+    <div class="row">
+      <div class="col-sm-offset-1 col-sm-10">
+        <p class="text-muted" data-bind="text: message"></p>
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped"
+            data-bind="css: { active: progress() }, style: { width: progressRate() }">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>MONITORING_ID</th>
+          <th>通信種別</th>
+          <th>開始日時</th>
+          <th>終了日時</th>
+          <th>成否</th>
+          <th>表示</th>
+          <th>保存</th>
+        </tr>
+      </thead>
+      <tbody data-bind="foreach: logs">
+        <tr>
+          <td><span data-bind="text: id"></span></td>
+          <td><span data-bind="text: statusName"></span></td>
+          <td><span data-bind="text: start"></span></td>
+          <td><span data-bind="text: end"></span></td>
+          <td>
+            <span class="label label-success"
+              data-bind="visible: result">OK</span>
+            <span class="label label-danger"
+              data-bind="visible: !result">NG</span>
+          </td>
+          <td>
+            <button class="btn btn-warn btn-xs"
+              data-bind="click: $parent.showLog">
+              <span class="glyphicon glyphicon-search"></span>
+              Show
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-info btn-xs"
+              data-bind="click: $parent.saveLog">
+              <span class="glyphicon glyphicon-save-file"></span>
+              Save
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel"
+            data-bind="text: modalTitle"></h4>
+        </div>
+        <div class="modal-body">
+          <pre data-bind="text: modalContent"></pre>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // require jquery
+    window.jQuery = window.$ = require("jquery");
+  </script>
+  <script src="bower_components/Honoka/dist/js/bootstrap.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "name": "electron-log-parser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "node_modules/.bin/electron .",
+    "build": "node build.js"
+  },
+  "keywords": [],
+  "author": "Kazunori Kimura <kazunori.kimura.js@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "co": "^4.6.0",
+    "fs-extra-promise": "^0.3.1",
+    "glob": "^7.0.3",
+    "jconv": "^0.1.5",
+    "jquery": "^2.2.2",
+    "knockout": "^3.4.0"
+  },
+  "devDependencies": {
+    "electron-packager": "^5.2.1",
+    "electron-prebuilt": "^0.37.2"
+  }
+}

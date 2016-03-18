@@ -1,0 +1,28 @@
+{
+  "name": "electron-log-parser",
+  "description": "",
+  "main": "main.js",
+  "authors": [
+    "Kazunori Kimura <kazunori.kimura.js@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "electron",
+    "log",
+    "parser"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "Honoka": "honoka#^3.3.6"
+  }
+}
