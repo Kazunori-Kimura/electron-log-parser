@@ -19,7 +19,7 @@ class LogData {
       // ログ種別を取得
       this.logType = trim(items[1]);
       // idを取得
-      this.id = "::1" === trim(items[2]) ? trim(items[3]) : trim(items[2]);
+      this.id = /^[A-Z0-9]{8}$/.test(trim(items[2])) ? trim(items[2]) : trim(items[3]);
 
       // idがモニターIDとして正しくない -> 通常行として扱う
       // ZZE1UT11
