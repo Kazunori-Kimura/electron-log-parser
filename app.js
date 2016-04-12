@@ -4,6 +4,7 @@ const browserWindow = remote.require('browser-window');
 const co = require("co");
 const ko = require("knockout");
 const path = require("path");
+const moment = require("moment");
 const util = require("./util");
 const ComData = require("./models/ComData");
 const LogData = require("./models/LogData");
@@ -205,6 +206,39 @@ function AppView() {
       yield util.saveLogAsync(file, data);
 
       self.message(`ファイルを保存しました。 ${file}`);
+    });
+  };
+  
+  /**
+   * 全ログを出力
+   */
+  self.exportAllLogs = function() {
+    co(function* (){
+      const logCount = self.logs().length;
+      
+      self.progress(true);
+      self.progressRate("0%");
+      for(let i=0; i<logCount; i++) {
+        self.message(`ファイルを出力しています: ${i+1}/${logCount}`);
+        self.progressRate(`calc(${i} / ${logCount} * 100%)`);
+        
+        const log = self.logs()[i];
+        //start:2016/04/11 16:53:37.353
+        const dt = moment(log.start, "YYYY/MM/DD HH:mm:ss.SSS").format("YYYYMMDDHHmmss");
+        const fileName = `CenterServer.${log.id}.${log.statusName}.${dt}.log`.replace(":", "_");
+        const file = path.resolve(self.path(), fileName);
+        const data = log.data.join("\r\n");
+        // ファイル保存
+        yield util.saveLogAsync(file, data);
+      }
+      
+      self.message(`ログ保存が終了しました。`);
+      self.progressRate("100%");
+      self.progress(false);
+    }).catch((err) => {
+      console.error(err);
+      self.message(err.message);
+      self.progress(false);
     });
   };
 }
