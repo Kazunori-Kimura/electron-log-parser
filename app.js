@@ -55,6 +55,11 @@ function AppView() {
     self.progressRate("0%");
     // リストを初期化
     self.logs.removeAll();
+    
+    let logging = {
+      file: "",
+      lineCount: 0
+    };
 
     co(function *(){
       // ログ解析用Map
@@ -72,6 +77,8 @@ function AppView() {
       self.maxFileCount(files.length);
 
       for(let i=0; i<files.length; i++) {
+        logging.file = files[i];
+        
         self.currentFile(files[i]);
         self.currentFileCount(i + 1);
         self.message(`ログ解析中: ${self.currentFile()} (${self.currentFileCount()}/${self.maxFileCount()})`);
@@ -87,6 +94,7 @@ function AppView() {
         let endFlag = false;   // endを見つけたら true
 
         for(let j=0; j<lines.length; j++) {
+          logging.lineCount = j;
           // 1行読み込み
           const log = new LogData(lines[j]);
 
@@ -170,6 +178,7 @@ function AppView() {
       self.progressRate("100%");
       self.progress(false);
     }).catch((err) => {
+      console.log(`error! ${logging.file}:${logging.lineCount}`);
       console.error(err);
       self.message(err.message);
       self.progress(false);

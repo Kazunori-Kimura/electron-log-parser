@@ -8,7 +8,7 @@ packager({
   out: "./bin",      // 出力先
   name: config.name,  // 名前
   platform: "win32", // win32
-  arch: "x64",        // 64bit
+  arch: "all",        // 64bit:x64, 32bit:ia32
   version: electron.version,  // electron のバージョン
   "app-bundle-id": "io.github.kazunori-kimura",
   "app-version": config.version,          // バージョン

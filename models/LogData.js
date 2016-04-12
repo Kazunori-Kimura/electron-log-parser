@@ -50,7 +50,10 @@ class LogData {
  * trim
  */
 function trim(str) {
-  return str.replace(/^\s+/, "").replace(/\s+$/, "");
+  if (str) {
+    return str.replace(/^\s+/, "").replace(/\s+$/, "");
+  }
+  return "";
 }
 
 module.exports = LogData;
