@@ -16,7 +16,7 @@ packager({
   asar: true,       // アーカイブ
   prune: true,
   // 無視ファイル
-  ignore: "node_modules/(electron-packager|electron-prebuilt|\.bin)|release\.js",
+  ignore: "node_modules/(electron-packager|electron-prebuilt|\.bin)|build\.js|bin/electron-log-parser-*",
 }, function done (err, appPath) {
   if(err) {
     throw new Error(err);
