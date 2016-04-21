@@ -30,6 +30,8 @@ function AppView() {
   // モーダル表示
   self.modalTitle = ko.observable("");
   self.modalContent = ko.observable("");
+  // フィルタ
+  self.filterId = ko.observable("");
 
   /**
    * フォルダ選択
@@ -240,6 +242,28 @@ function AppView() {
       self.message(err.message);
       self.progress(false);
     });
+  };
+  
+  /**
+   * ログ一覧のフィルタリング
+   */
+  self.filter = function(log){
+    const filterId = self.filterId().toUpperCase();
+    if (filterId == "") {
+      return true;
+    }
+    // 前方一致
+    const logId = log.id.substring(0, filterId.length).toUpperCase();
+    if (filterId == logId) {
+      return true;
+    }
+    return false;
+  };
+  /**
+   * フィルタを解除する
+   */
+  self.clearFilter = function(){
+    self.filterId("");
   };
 }
 
