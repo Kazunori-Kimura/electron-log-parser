@@ -225,13 +225,15 @@ function AppView() {
         self.progressRate(`calc(${i} / ${logCount} * 100%)`);
         
         const log = self.logs()[i];
-        //start:2016/04/11 16:53:37.353
-        const dt = moment(log.start, "YYYY/MM/DD HH:mm:ss.SSS").format("YYYYMMDDHHmmss");
-        const fileName = `CenterServer.${log.id}.${log.statusName}.${dt}.log`.replace(":", "_");
-        const file = path.resolve(self.path(), fileName);
-        const data = log.data.join("\r\n");
-        // ファイル保存
-        yield util.saveLogAsync(file, data);
+        if (self.filter(log)) {
+          //start:2016/04/11 16:53:37.353
+          const dt = moment(log.start, "YYYY/MM/DD HH:mm:ss.SSS").format("YYYYMMDDHHmmss");
+          const fileName = `CenterServer.${log.id}.${log.statusName}.${dt}.log`.replace(":", "_");
+          const file = path.resolve(self.path(), fileName);
+          const data = log.data.join("\r\n");
+          // ファイル保存
+          yield util.saveLogAsync(file, data);
+        }
       }
       
       self.message(`ログ保存が終了しました。`);
